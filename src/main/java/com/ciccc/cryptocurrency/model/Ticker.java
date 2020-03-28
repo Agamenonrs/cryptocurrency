@@ -15,13 +15,13 @@ public abstract class Ticker {
     protected BigDecimal buy;
     protected BigDecimal sell;
     protected Long date;
-    protected String currency;
+    protected Currency currency;
 
 
     public abstract void setTicker(JsonObjectIntegration jsonObject);
 
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 

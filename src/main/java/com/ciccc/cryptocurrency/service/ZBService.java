@@ -31,14 +31,9 @@ public class ZBService extends ExchangeService {
             throw new ZBException("Invalid code.");
         }
         String pairCode = currency.getCode() + "_" + CoinCode.DOLAR_USDT.getCodigo();
-        //String url = getDomain() + pairCode.toLowerCase()  ;
-
         try {
             JsonObjectIntegration jsonObject = JsonObjectIntegration.readFrom(invokeApiMethod(pairCode));
-
-            Ticker ticker = new ZBTicker();
-            ticker.setTicker(jsonObject);
-            return ticker;
+            return new ZBTicker(jsonObject, currency);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,10 +45,10 @@ public class ZBService extends ExchangeService {
             String url = clientRest.generateApiUrlV2(getDomain(), path);
             return clientRest.getResponseFromServerV2(url);
         } catch (MalformedURLException e) {
-            throw new MercadoBitcoinException("Internal error: Invalid URL.");
+            throw new ZBException("Internal error: Invalid URL.");
         } catch (IOException e) {
             e.printStackTrace();
-            throw new MercadoBitcoinException("Internal error: Failure in connection.");
+            throw new ZBException("Internal error: Failure in connection.");
         }
     }
 

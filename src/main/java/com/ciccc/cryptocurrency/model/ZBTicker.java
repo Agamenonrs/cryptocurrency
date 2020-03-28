@@ -1,12 +1,21 @@
-package com.ciccc.cryptocurrency.model;/*
+package com.ciccc.cryptocurrency.model;
+/*
 @author Agamenon
 */
 
+import com.ciccc.cryptocurrency.enums.ExchangeCode;
 import com.ciccc.cryptocurrency.util.json.JsonObjectIntegration;
 
 import java.math.BigDecimal;
 
 public class ZBTicker extends Ticker {
+
+    private final ExchangeCode exchange = ExchangeCode.MBTC;
+
+    public ZBTicker(JsonObjectIntegration jsonObject, Currency currency) {
+        super.currency = currency;
+        setTicker(jsonObject);
+    }
 
     @Override
     public void setTicker(JsonObjectIntegration jsonObject) {

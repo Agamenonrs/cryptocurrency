@@ -16,7 +16,8 @@ public class MercadoBitcoinTicker extends Ticker {
      *
      * @param jsonObject Trade API JSON response
      */
-    public MercadoBitcoinTicker(JsonObjectIntegration jsonObject) {
+    public MercadoBitcoinTicker(JsonObjectIntegration jsonObject, Currency currency) {
+        super.currency = currency;
         setTicker(jsonObject);
     }
 

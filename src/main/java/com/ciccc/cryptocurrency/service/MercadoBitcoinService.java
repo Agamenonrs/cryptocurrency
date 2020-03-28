@@ -31,7 +31,7 @@ public class MercadoBitcoinService extends ExchangeService {
         String url = assemblyUrl(currency, "ticker");
         JsonObjectIntegration jsonObject = JsonObjectIntegration.readFrom(invokeApiMethod(url));
         JsonObjectIntegration ticketJsonObject = jsonObject.get("ticker").asObject();
-        return new MercadoBitcoinTicker(ticketJsonObject);
+        return new MercadoBitcoinTicker(ticketJsonObject, currency);
     }
 
     private String assemblyUrl(Currency currency, String method, String ... pathParams) throws MercadoBitcoinException {

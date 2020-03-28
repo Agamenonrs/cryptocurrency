@@ -1,4 +1,5 @@
-package com.ciccc.cryptocurrency.model;/*
+package com.ciccc.cryptocurrency.model;
+/*
 @author Agamenon
 */
 
@@ -11,6 +12,11 @@ public class BinanceTicker extends Ticker {
 
     private final ExchangeCode exchange = ExchangeCode.BINC;
 
+    public BinanceTicker(JsonObjectIntegration jsonObject, Currency currency) {
+        super.currency = currency;
+        setTicker(jsonObject);
+    }
+
     @Override
     public void setTicker(JsonObjectIntegration jsonObject) {
         high = new BigDecimal(jsonObject.get("highPrice").asString());
@@ -20,6 +26,5 @@ public class BinanceTicker extends Ticker {
         buy = new BigDecimal(jsonObject.get("bidPrice").asString());
         sell = new BigDecimal(jsonObject.get("askPrice").asString());
         date = jsonObject.get("closeTime").asLong();
-
     }
 }

@@ -36,9 +36,7 @@ public class BinanceService extends ExchangeService {
         String url = assemblyUrl(params);
         JsonObjectIntegration jsonObject = JsonObjectIntegration.readFrom(invokeApiMethodV2(url));
         JsonObjectIntegration ticketJsonObject = jsonObject.asObject();
-        BinanceTicker ticker = new BinanceTicker();
-        ticker.setTicker(ticketJsonObject);
-        return ticker;
+        return new BinanceTicker(jsonObject,currency);
 
     }
 

@@ -2,29 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>ListaVIP</title>
+<title>Currency Price</title>
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
 
 	<div class="container">
 
-		<div id="listaDeConvidados">
-			<!--<table class="table table-hover">
+		<div id="tickerlist">
+			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Nome</th>
-						<th>Email</th>
-						<th>Nome</th>
+						<th>Currency</th>
+						<th>Buy</th>
+						<th>Sell</th>
 					</tr>
 				</thead>
-				<tr th:each="convidado : ${convidados}">
-					<td><span th:text="${convidado.nome}"></span></td>
-					<td><span th:text="${convidado.email}"></span></td>
-					<td><span th:text="${convidado.telefone}"></span></td>
+				<tr th:each="ticker : ${tickers}">
+					<td><span th:text="${ticker.currency.code}"></span></td>
+					<td><span th:text="${ticker.buy}"></span></td>
+					<td><span th:text="${ticker.sell}"></span></td>
 				</tr>
 
-			</table>-->
+			</table>
 		</div>
 
 	</div>
