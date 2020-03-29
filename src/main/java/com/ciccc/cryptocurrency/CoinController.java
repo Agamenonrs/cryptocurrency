@@ -3,6 +3,7 @@ package com.ciccc.cryptocurrency;
 import com.ciccc.cryptocurrency.model.Currency;
 import com.ciccc.cryptocurrency.model.Ticker;
 import com.ciccc.cryptocurrency.service.BinanceService;
+import com.ciccc.cryptocurrency.service.DollarQuotationService;
 import com.ciccc.cryptocurrency.service.MercadoBitcoinService;
 import com.ciccc.cryptocurrency.service.ZBService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +24,15 @@ public class CoinController {
 	private MercadoBitcoinService mercadoBitcoinApi;
 
 	@Autowired
-	BinanceService binanceApi;
+	private BinanceService binanceApi;
 
 	@Autowired
-	ZBService zbApi;
+	private ZBService zbApi;
+
+	@Autowired
+	private DollarQuotationService dollarQuotationService;
+
+	private List<Ticker> tickers;
 	
 	@RequestMapping("/")
 	public String index(){
@@ -34,8 +41,7 @@ public class CoinController {
 
 	@RequestMapping(value="/ticker24h", method= RequestMethod.GET)
 	public ResponseEntity<List<Ticker>> find() {
-		List<Ticker> tickers = new ArrayList<>();
-
+		tickers = new ArrayList<>();
 		try {
 			Currency currency = new Currency();
 			currency.setCode("XRP");
@@ -53,6 +59,18 @@ public class CoinController {
 		return ResponseEntity.ok().body(tickers);
 	}
 
+	@RequestMapping(value="/dollarQuotation", method= RequestMethod.GET)
+	public ResponseEntity<BigDecimal> dollarQuotation() {
+		BigDecimal value= BigDecimal.ZERO;
+		try {
+		     value = dollarQuotationService.getBuyQuotation();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ResponseEntity.ok().body(value);
+	}
+
 	@RequestMapping(value="/currencyprices", method= RequestMethod.GET)
 	public String listaCurrencyPrices(Model model) {
 		List<Ticker> tickers = new ArrayList<>();
@@ -66,7 +84,24 @@ public class CoinController {
 			tickers.add(mbc);
 			tickers.add(bin);
 			tickers.add(zb);
+
+			Ticker minBuy = tickers.get(0);
+			Ticker maxSell = tickers.get(0);
+			for(int i = 1 ; i < tickers.size(); i++){
+				Ticker tickerAux = tickers.get(i);
+				if(!tickerAux.getExchange().equals(minBuy.getExchange())){
+					if (minBuy.getBuy().compareTo(tickerAux.getBuy()) > 0){
+						minBuy = tickerAux;
+					}
+					if(maxSell.getSell().compareTo(tickerAux.getSell()) < 0){
+						maxSell = tickerAux;
+					}
+				}
+			}
+
 			model.addAttribute("tickers", tickers);
+			model.addAttribute("minBuy", minBuy);
+			model.addAttribute("maxSell", maxSell);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -2,6 +2,7 @@ package com.ciccc.cryptocurrency.model;/*
 @author Agamenon
 */
 
+import com.ciccc.cryptocurrency.enums.ExchangeCode;
 import com.ciccc.cryptocurrency.util.json.JsonObjectIntegration;
 
 import java.math.BigDecimal;
@@ -16,10 +17,14 @@ public abstract class Ticker {
     protected BigDecimal sell;
     protected Long date;
     protected Currency currency;
+    protected ExchangeCode exchange;
 
 
     public abstract void setTicker(JsonObjectIntegration jsonObject);
 
+    public ExchangeCode getExchange() {
+        return exchange;
+    }
 
     public Currency getCurrency() {
         return currency;

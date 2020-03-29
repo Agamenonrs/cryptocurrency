@@ -10,10 +10,10 @@ import java.math.BigDecimal;
 
 public class BinanceTicker extends Ticker {
 
-    private final ExchangeCode exchange = ExchangeCode.BINC;
 
     public BinanceTicker(JsonObjectIntegration jsonObject, Currency currency) {
         super.currency = currency;
+        exchange = ExchangeCode.BINC;
         setTicker(jsonObject);
     }
 

@@ -7,9 +7,11 @@ import com.ciccc.cryptocurrency.model.Currency;
 import com.ciccc.cryptocurrency.model.Ticker;
 import com.ciccc.cryptocurrency.model.MercadoBitcoinTicker;
 import com.ciccc.cryptocurrency.util.json.JsonObjectIntegration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 
 @Service
@@ -17,6 +19,9 @@ public class MercadoBitcoinService extends ExchangeService {
 
     private static final String DOMAIN = "https://www.mercadobitcoin.net";
     private static final String API_PATH = "/api/";
+
+    @Autowired
+    private DollarQuotationService dollarQuotationService;
 
     public MercadoBitcoinService() throws MercadoBitcoinException {
         clientRest = new ClientRestService();
@@ -31,7 +36,8 @@ public class MercadoBitcoinService extends ExchangeService {
         String url = assemblyUrl(currency, "ticker");
         JsonObjectIntegration jsonObject = JsonObjectIntegration.readFrom(invokeApiMethod(url));
         JsonObjectIntegration ticketJsonObject = jsonObject.get("ticker").asObject();
-        return new MercadoBitcoinTicker(ticketJsonObject, currency);
+        BigDecimal dollarPrice = dollarQuotationService.getBuyQuotation();
+        return new MercadoBitcoinTicker(ticketJsonObject, currency, dollarPrice);
     }
 
     private String assemblyUrl(Currency currency, String method, String ... pathParams) throws MercadoBitcoinException {

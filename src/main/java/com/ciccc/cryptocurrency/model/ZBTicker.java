@@ -10,10 +10,9 @@ import java.math.BigDecimal;
 
 public class ZBTicker extends Ticker {
 
-    private final ExchangeCode exchange = ExchangeCode.MBTC;
-
     public ZBTicker(JsonObjectIntegration jsonObject, Currency currency) {
         super.currency = currency;
+        exchange = ExchangeCode.ZB;
         setTicker(jsonObject);
     }
 

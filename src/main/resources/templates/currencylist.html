@@ -1,37 +1,73 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Currency Price</title>
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Currency Price</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
 
-	<div class="container">
+<div class="container">
 
-		<div id="tickerlist">
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>Currency</th>
-						<th>Buy</th>
-						<th>Sell</th>
-					</tr>
-				</thead>
-				<tr th:each="ticker : ${tickers}">
-					<td><span th:text="${ticker.currency.code}"></span></td>
-					<td><span th:text="${ticker.buy}"></span></td>
-					<td><span th:text="${ticker.sell}"></span></td>
-				</tr>
+    <div class="panel-group">
+        <button data-toggle="collapse" class="btn btn-info" data-target="#tickerlist">Collapsible</button>
+        <div class="panel panel-default collapse" id="tickerlist">
+            <div class="panel-heading">Panel Heading</div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+						<th>Logo</th>
+                        <th>Exchange</th>
+                        <th>Currency</th>
+                        <th>Buy</th>
+                        <th>Sell</th>
+                    </tr>
+                    </thead>
+                    <tr th:each="ticker : ${tickers}">
+						<td><img src="/images/logos/zb.png"></td>
+                        <td><span th:text="${ticker.exchange.exchangeName}"></span></td>
+                        <td><span th:text="${ticker.currency.code}"></span></td>
+                        <td><span th:text="${ticker.buy}"></span></td>
+                        <td><span th:text="${ticker.sell}"></span></td>
+                    </tr>
 
-			</table>
-		</div>
+                </table>
+            </div>
+        </div>
+    </div>
 
-	</div>
 
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
+    <div class="panel panel-default" id="tickerTip">
+        <div class="panel-heading">Panel Heading</div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Where Buy</th>
+                    <th>Currency</th>
+                    <th>Buy Price</th>
+                    <th>Where Sell</th>
+                    <th>Sell Price</th>
+                </tr>
+                </thead>
+                <tr>
+                    <td><span th:text="${minBuy.exchange.exchangeName}"></span></td>
+                    <td><span th:text="${minBuy.currency.code}"></span></td>
+                    <td><span th:text="${minBuy.buy}"></span></td>
+                    <td><span th:text="${maxSell.exchange.exchangeName}"></span></td>
+                    <td><span th:text="${maxSell.sell}"></span></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>

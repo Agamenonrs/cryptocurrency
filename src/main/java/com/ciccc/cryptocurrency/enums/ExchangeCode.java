@@ -4,5 +4,18 @@ package com.ciccc.cryptocurrency.enums;/*
 
 public enum ExchangeCode {
 
-    MBTC,BINC,OKEX,ZB
+    MBTC("Mercado Bitcoin"),
+    BINC("Binance"),
+    OKEX("OKEX"),
+    ZB("ZB");
+
+    private String exchangeName;
+
+    ExchangeCode( String exchangeName ){
+        this.exchangeName = exchangeName;
+    }
+
+    public String getExchangeName() {
+        return exchangeName;
+    }
 }
