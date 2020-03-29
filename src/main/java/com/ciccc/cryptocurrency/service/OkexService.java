@@ -31,7 +31,7 @@ public class OkexService extends ExchangeService {
         if (currency == null || currency.getCode() == null) {
             throw new Exception("Código da moeda invalido.");
         }
-        String url = getDomain() + currency.getCode() + "-" + CoinCode.DOLAR_USDT.getCodigo() + "/ticker";
+        String url = getDomain() + currency.getCode() + "-" + CoinCode.DOLAR_USDT.getCode() + "/ticker";
         JsonObjectIntegration jsonObject = JsonObjectIntegration.readFrom(invokeApiMethod(url));
         JsonObjectIntegration ticketJsonObject = jsonObject.asObject();
         OkexTicker ticker = new OkexTicker(ticketJsonObject,currency);

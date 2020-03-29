@@ -1,5 +1,6 @@
 package com.ciccc.cryptocurrency;
 
+import com.ciccc.cryptocurrency.enums.CoinCode;
 import com.ciccc.cryptocurrency.model.Currency;
 import com.ciccc.cryptocurrency.model.Ticker;
 import com.ciccc.cryptocurrency.service.*;
@@ -78,16 +79,21 @@ public class CoinController {
 		List<Ticker> tickers = new ArrayList<>();
 
 		try {
-			Currency currency = new Currency();
-			currency.setCode("XRP");
-			Ticker mbc = mercadoBitcoinApi.getPrice24hr(currency);
-			Ticker bin = binanceApi.getPrice24hr(currency);
-			Ticker zb = zbApi.getPrice24hr(currency);
-			Ticker okex = okexService.getPrice24hr(currency);
-			tickers.add(mbc);
-			tickers.add(bin);
-			tickers.add(zb);
-			tickers.add(okex);
+			for (CoinCode code : CoinCode.values()){
+				if(code.equals(CoinCode.DOLAR_USDT) || code.equals(CoinCode.REAL_BRL))
+					continue;
+
+				Currency currency = new Currency();
+				currency.setCode(code.getCode());
+				Ticker mbc = mercadoBitcoinApi.getPrice24hr(currency);
+				Ticker bin = binanceApi.getPrice24hr(currency);
+				Ticker zb = zbApi.getPrice24hr(currency);
+				Ticker okex = okexService.getPrice24hr(currency);
+				tickers.add(mbc);
+				tickers.add(bin);
+				tickers.add(zb);
+				tickers.add(okex);
+			}
 
 			Ticker minBuy = tickers.get(0);
 			Ticker maxSell = tickers.get(0);

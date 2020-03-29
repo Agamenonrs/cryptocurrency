@@ -5,7 +5,11 @@ package com.ciccc.cryptocurrency.enums;
 
 public enum CoinCode {
     DOLAR_USDT("USDT"),
-    REAL_BRL("BRL");
+    REAL_BRL("BRL"),
+    BITCOIN("BTC"),
+    ETHEREUM("ETH"),
+    LITECOIN("LTC"),
+    XRP("XRP");
 
     String code;
 
@@ -13,7 +17,7 @@ public enum CoinCode {
         this.code = code;
     }
 
-    public String getCodigo() {
+    public String getCode() {
         return code;
     }
 }

@@ -30,7 +30,7 @@ public class ZBService extends ExchangeService {
         if (currency == null || currency.getCode() == null) {
             throw new ZBException("Invalid code.");
         }
-        String pairCode = currency.getCode() + "_" + CoinCode.DOLAR_USDT.getCodigo();
+        String pairCode = currency.getCode() + "_" + CoinCode.DOLAR_USDT.getCode();
         try {
             JsonObjectIntegration jsonObject = JsonObjectIntegration.readFrom(invokeApiMethod(pairCode));
             return new ZBTicker(jsonObject, currency);

@@ -32,7 +32,7 @@ public class BinanceService extends ExchangeService {
             throw new BinanceException("Invalid currency code.");
         }
         Map<String,String> params = new HashMap<String,String>();
-        params.put("symbol", currency.getCode()+ CoinCode.DOLAR_USDT.getCodigo());
+        params.put("symbol", currency.getCode()+ CoinCode.DOLAR_USDT.getCode());
         String url = assemblyUrl(params);
         JsonObjectIntegration jsonObject = JsonObjectIntegration.readFrom(invokeApiMethodV2(url));
         JsonObjectIntegration ticketJsonObject = jsonObject.asObject();
