@@ -51,12 +51,12 @@
                     <th>Sell Price</th>
                 </tr>
                 </thead>
-                <tr>
-                    <td><span th:text="${minBuy.exchange.exchangeName}"></span></td>
-                    <td><span th:text="${minBuy.currency.code}"></span></td>
-                    <td><span th:text="${minBuy.buy}"></span></td>
-                    <td><span th:text="${maxSell.exchange.exchangeName}"></span></td>
-                    <td><span th:text="${maxSell.sell}"></span></td>
+                <tr th:each="opportunity : ${opportunities}">
+                    <td><span th:text="${opportunity.buy.exchange.exchangeName}"></span></td>
+                    <td><span th:text="${opportunity.currency.code}"></span></td>
+                    <td><span th:text="${opportunity.buy.buy}"></span></td>
+                    <td><span th:text="${opportunity.sell.exchange.exchangeName}"></span></td>
+                    <td><span th:text="${opportunity.sell.sell}"></span></td>
                 </tr>
 
             </table>

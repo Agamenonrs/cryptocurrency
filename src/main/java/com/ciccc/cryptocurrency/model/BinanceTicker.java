@@ -19,12 +19,12 @@ public class BinanceTicker extends Ticker {
 
     @Override
     public void setTicker(JsonObjectIntegration jsonObject) {
-        high = new BigDecimal(jsonObject.get("highPrice").asString());
-        low = new BigDecimal(jsonObject.get("lowPrice").asString());
-        vol = new BigDecimal(jsonObject.get("volume").asString());
-        last = new BigDecimal(jsonObject.get("lastPrice").asString());
-        buy = new BigDecimal(jsonObject.get("bidPrice").asString());
-        sell = new BigDecimal(jsonObject.get("askPrice").asString());
+        high = new BigDecimal(jsonObject.get("highPrice").asString()).setScale(8);
+        low = new BigDecimal(jsonObject.get("lowPrice").asString()).setScale(8);
+        vol = new BigDecimal(jsonObject.get("volume").asString()).setScale(8);
+        last = new BigDecimal(jsonObject.get("lastPrice").asString()).setScale(8);
+        buy = new BigDecimal(jsonObject.get("bidPrice").asString()).setScale(8);
+        sell = new BigDecimal(jsonObject.get("askPrice").asString()).setScale(8);
         date = jsonObject.get("closeTime").asLong();
     }
 }

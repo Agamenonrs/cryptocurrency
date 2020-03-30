@@ -1,7 +1,8 @@
-package com.ciccc.cryptocurrency;
+package com.ciccc.cryptocurrency.controller;
 
 import com.ciccc.cryptocurrency.enums.CoinCode;
 import com.ciccc.cryptocurrency.model.Currency;
+import com.ciccc.cryptocurrency.model.Opportunity;
 import com.ciccc.cryptocurrency.model.Ticker;
 import com.ciccc.cryptocurrency.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class CoinController {
@@ -77,11 +79,13 @@ public class CoinController {
 	@RequestMapping(value="/currencyprices", method= RequestMethod.GET)
 	public String listaCurrencyPrices(Model model) {
 		List<Ticker> tickers = new ArrayList<>();
+		List<Opportunity> opportunities = new ArrayList<>();
 
 		try {
 			for (CoinCode code : CoinCode.values()){
 				if(code.equals(CoinCode.DOLAR_USDT) || code.equals(CoinCode.REAL_BRL))
 					continue;
+
 
 				Currency currency = new Currency();
 				currency.setCode(code.getCode());
@@ -93,25 +97,33 @@ public class CoinController {
 				tickers.add(bin);
 				tickers.add(zb);
 				tickers.add(okex);
-			}
 
-			Ticker minBuy = tickers.get(0);
-			Ticker maxSell = tickers.get(0);
-			for(int i = 1 ; i < tickers.size(); i++){
-				Ticker tickerAux = tickers.get(i);
-				if(!tickerAux.getExchange().equals(minBuy.getExchange())){
-					if (minBuy.getBuy().compareTo(tickerAux.getBuy()) > 0){
-						minBuy = tickerAux;
-					}
-					if(maxSell.getSell().compareTo(tickerAux.getSell()) < 0){
-						maxSell = tickerAux;
+				List<Ticker> tempTicker = tickers.stream()
+						.filter(c-> c.getCurrency().equals(currency))
+						.collect(Collectors.toList());
+
+
+				Ticker minBuy = tempTicker.get(0);
+				Ticker maxSell = tempTicker.get(0);
+				for(int i = 1 ; i < tempTicker.size(); i++){
+					Ticker tickerAux = tempTicker.get(i);
+					if(!tickerAux.getExchange().equals(minBuy.getExchange())){
+						if (minBuy.getBuy().compareTo(tickerAux.getBuy()) > 0){
+							minBuy = tickerAux;
+						}
+						if(maxSell.getSell().compareTo(tickerAux.getSell()) < 0){
+							maxSell = tickerAux;
+						}
 					}
 				}
+				Opportunity o = new Opportunity(currency,minBuy,maxSell);
+				opportunities.add(o);
 			}
 
+
+
 			model.addAttribute("tickers", tickers);
-			model.addAttribute("minBuy", minBuy);
-			model.addAttribute("maxSell", maxSell);
+			model.addAttribute("opportunities", opportunities);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
