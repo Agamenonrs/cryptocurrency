@@ -4,6 +4,7 @@ import com.ciccc.cryptocurrency.enums.CoinCode;
 import com.ciccc.cryptocurrency.model.Currency;
 import com.ciccc.cryptocurrency.model.Opportunity;
 import com.ciccc.cryptocurrency.model.Ticker;
+import com.ciccc.cryptocurrency.model.UserConfiguration;
 import com.ciccc.cryptocurrency.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +42,23 @@ public class CoinController {
 	@RequestMapping("/")
 	public String index(){
 		return "index";
+	}
+
+	@RequestMapping("/preferences")
+	public String preperences(Model model ){
+		UserConfiguration userConfiguration = new UserConfiguration();
+		List<Currency> currencies = new ArrayList<>();
+		/*Currency currency;
+		for (CoinCode code : CoinCode.values()){
+			currency = new Currency();
+			currency.setCode(code.getCode());
+			currencies.add(currency);
+		}*/
+		userConfiguration.setCurrencies(currencies);
+		//currencies = (List<Currency>) Arrays.asList(CoinCode.values());
+		model.addAttribute("coinCodes", CoinCode.values());
+		model.addAttribute("userConfiguration", userConfiguration);
+		return "preferences";
 	}
 
 	@RequestMapping(value="/ticker24h", method= RequestMethod.GET)

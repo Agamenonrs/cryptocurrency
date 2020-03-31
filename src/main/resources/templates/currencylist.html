@@ -44,19 +44,23 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Where Buy</th>
                     <th>Currency</th>
+                    <th>Where Buy</th>
                     <th>Buy Price</th>
                     <th>Where Sell</th>
                     <th>Sell Price</th>
+                    <th>Spread</th>
+                    <th>%</th>
                 </tr>
                 </thead>
                 <tr th:each="opportunity : ${opportunities}">
-                    <td><span th:text="${opportunity.buy.exchange.exchangeName}"></span></td>
                     <td><span th:text="${opportunity.currency.code}"></span></td>
+                    <td><span th:text="${opportunity.buy.exchange.exchangeName}"></span></td>
                     <td><span th:text="${opportunity.buy.buy}"></span></td>
                     <td><span th:text="${opportunity.sell.exchange.exchangeName}"></span></td>
                     <td><span th:text="${opportunity.sell.sell}"></span></td>
+                    <td><span th:text="${opportunity.spread}"></span></td>
+                    <td><span th:text="${opportunity.spreadPercentage}"></span></td>
                 </tr>
 
             </table>
