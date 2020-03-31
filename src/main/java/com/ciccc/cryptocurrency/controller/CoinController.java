@@ -1,6 +1,7 @@
 package com.ciccc.cryptocurrency.controller;
 
 import com.ciccc.cryptocurrency.enums.CoinCode;
+import com.ciccc.cryptocurrency.enums.ExchangeCode;
 import com.ciccc.cryptocurrency.model.Currency;
 import com.ciccc.cryptocurrency.model.Opportunity;
 import com.ciccc.cryptocurrency.model.Ticker;
@@ -47,16 +48,8 @@ public class CoinController {
 	@RequestMapping("/preferences")
 	public String preperences(Model model ){
 		UserConfiguration userConfiguration = new UserConfiguration();
-		List<Currency> currencies = new ArrayList<>();
-		/*Currency currency;
-		for (CoinCode code : CoinCode.values()){
-			currency = new Currency();
-			currency.setCode(code.getCode());
-			currencies.add(currency);
-		}*/
-		userConfiguration.setCurrencies(currencies);
-		//currencies = (List<Currency>) Arrays.asList(CoinCode.values());
-		model.addAttribute("coinCodes", CoinCode.values());
+		model.addAttribute("exchanges", ExchangeCode.values());
+		model.addAttribute("coins", CoinCode.values());
 		model.addAttribute("userConfiguration", userConfiguration);
 		return "preferences";
 	}

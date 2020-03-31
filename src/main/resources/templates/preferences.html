@@ -21,25 +21,26 @@
 						<input th:field="*{spreadMin}" type="number" class="form-control" id="spread" placeholder="Ex. 1.2">
 					</div>
 				</div>
-				<!--<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<ul>
-							<li th:each="currency : ${userConfiguration.currencies}" >
-						<div class="checkbox">
-							<input type="checkbox" th:field="*{currencies}" th:value="${currency.code}">
-							<label th:text="${currency.code}"></label>
-						</div>
-							</li>
-						</ul>
-					</div>
-				</div>-->
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<ul>
-							<li th:each="currency : ${coinCodes}" >
+							<li th:each="currency : ${coins}" >
 								<div class="checkbox">
 									<input type="checkbox" th:field="${userConfiguration.currencies}" th:value="${currency.code}">
 									<label th:text="${currency.code}"></label>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<ul>
+							<li th:each="exchange : ${exchanges}" >
+								<div class="checkbox">
+									<input type="checkbox" th:field="${userConfiguration.exchanges}" th:value="${exchange.name()}">
+									<label th:text="${exchange.exchangeName}"></label>
 								</div>
 							</li>
 						</ul>

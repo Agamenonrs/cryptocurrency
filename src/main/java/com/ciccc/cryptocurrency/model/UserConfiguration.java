@@ -6,6 +6,7 @@ package com.ciccc.cryptocurrency.model;
 import com.ciccc.cryptocurrency.enums.ExchangeCode;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserConfiguration {
@@ -14,6 +15,11 @@ public class UserConfiguration {
     BigDecimal spreadMin;
     List<Currency> currencies;
     List<ExchangeCode> exchanges;
+
+    public UserConfiguration() {
+        this.currencies = new ArrayList<>();
+        this.exchanges = new ArrayList<>();
+    }
 
     public BigDecimal getValue() {
         return value;
