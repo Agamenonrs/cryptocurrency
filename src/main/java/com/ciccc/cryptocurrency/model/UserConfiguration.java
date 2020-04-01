@@ -4,14 +4,19 @@ package com.ciccc.cryptocurrency.model;
 */
 
 import com.ciccc.cryptocurrency.enums.ExchangeCode;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
 public class UserConfiguration {
 
-    BigDecimal value;
+    BigDecimal value = BigDecimal.ZERO;
     BigDecimal spreadMin;
     List<Currency> currencies;
     List<ExchangeCode> exchanges;

@@ -8,11 +8,13 @@ import com.ciccc.cryptocurrency.model.Ticker;
 import com.ciccc.cryptocurrency.model.UserConfiguration;
 import com.ciccc.cryptocurrency.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
+@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class CoinController {
 
 	@Autowired
@@ -46,11 +49,10 @@ public class CoinController {
 	}
 
 	@RequestMapping("/preferences")
-	public String preperences(Model model ){
-		UserConfiguration userConfiguration = new UserConfiguration();
+	public String preperences(Model model){
 		model.addAttribute("exchanges", ExchangeCode.values());
 		model.addAttribute("coins", CoinCode.values());
-		model.addAttribute("userConfiguration", userConfiguration);
+		model.addAttribute("userConfiguration", new UserConfiguration());
 		return "preferences";
 	}
 
@@ -92,7 +94,7 @@ public class CoinController {
 	public String listaCurrencyPrices(Model model) {
 		List<Ticker> tickers = new ArrayList<>();
 		List<Opportunity> opportunities = new ArrayList<>();
-
+		System.out.println("========== loading page ============");
 		try {
 			for (CoinCode code : CoinCode.values()){
 				if(code.equals(CoinCode.DOLAR_USDT) || code.equals(CoinCode.REAL_BRL))

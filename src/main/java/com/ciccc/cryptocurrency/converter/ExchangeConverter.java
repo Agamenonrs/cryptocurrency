@@ -1,4 +1,5 @@
-package com.ciccc.cryptocurrency.converter;/*
+package com.ciccc.cryptocurrency.converter;
+/*
 @author Agamenon
 */
 
