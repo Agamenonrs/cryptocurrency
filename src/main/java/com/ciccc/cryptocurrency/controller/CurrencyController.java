@@ -53,14 +53,6 @@ public class CurrencyController {
         return "index";
     }
 
-    @RequestMapping("/preferences")
-    public String preperences(Model model) {
-        model.addAttribute("exchanges", ExchangeCode.values());
-        model.addAttribute("coins", CoinCode.values());
-        model.addAttribute("userConfiguration", new UserConfiguration());
-        return "preferences";
-    }
-
     @RequestMapping(value = "/ticker24h", method = RequestMethod.GET)
     public ResponseEntity<List<Ticker>> find() {
         tickers = new ArrayList<>();
