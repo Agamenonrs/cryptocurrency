@@ -4,20 +4,26 @@ package com.ciccc.cryptocurrency.enums;
 */
 
 public enum CoinCode {
-    DOLAR_USDT("USDT"),
-    REAL_BRL("BRL"),
-    BITCOIN("BTC"),
-    ETHEREUM("ETH"),
-    LITECOIN("LTC"),
-    XRP("XRP");
+    DOLAR_USDT("USDT", false),
+    REAL_BRL("BRL",false),
+    BITCOIN("BTC",true),
+    ETHEREUM("ETH",true),
+    LITECOIN("LTC",true),
+    XRP("XRP",true);
 
     String code;
+    boolean crypto;
 
-    CoinCode(String code){
+    CoinCode(String code,boolean crypto ){
         this.code = code;
+        this.crypto = crypto;
     }
 
     public String getCode() {
         return code;
+    }
+
+    public boolean isCrypto() {
+        return crypto;
     }
 }

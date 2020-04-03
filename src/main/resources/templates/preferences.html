@@ -26,7 +26,9 @@
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<ul>
-							<li th:each="currency : ${coins}" >
+							<li th:each="currency : ${coins}"
+								th:object="${currency}"
+								th:if="${currency.crypto} == true">
 								<div class="checkbox">
 									<input type="checkbox" th:field="${userConfiguration.currencies}" th:value="${currency.code}">
 									<label th:text="${currency.code}"></label>
