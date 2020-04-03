@@ -2,10 +2,7 @@ package com.ciccc.cryptocurrency.controller;
 
 import com.ciccc.cryptocurrency.enums.CoinCode;
 import com.ciccc.cryptocurrency.enums.ExchangeCode;
-import com.ciccc.cryptocurrency.model.Currency;
-import com.ciccc.cryptocurrency.model.Opportunity;
-import com.ciccc.cryptocurrency.model.Ticker;
-import com.ciccc.cryptocurrency.model.UserConfiguration;
+import com.ciccc.cryptocurrency.model.*;
 import com.ciccc.cryptocurrency.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -19,6 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -109,21 +107,38 @@ public class CurrencyController {
             System.out.println("USER CONFIGURATION NULL");
         }
         try {
-            for (CoinCode code : CoinCode.values()) {
-                if (code.equals(CoinCode.DOLAR_USDT) || code.equals(CoinCode.REAL_BRL))
+            List<Currency> currencies = new ArrayList<>();
+            List<ExchangeCode> exchangeCodes = null;
+            if (userConfiguration != null && userConfiguration.getCurrencies().size() > 0) {
+                currencies = userConfiguration.getCurrencies();
+                if(userConfiguration.getExchanges() != null &&
+                        userConfiguration.getExchanges().size() > 0)
+                exchangeCodes = userConfiguration.getExchanges();
+            } else {
+                for (CoinCode code : CoinCode.values()) {
+                    Currency c = new Currency();
+                    c.setCode(code.getCode());
+                }
+                exchangeCodes = Arrays.asList(ExchangeCode.values()) ;
+
+            }
+            for (Currency currency : currencies) {
+                if (currency.getCode().equals(CoinCode.DOLAR_USDT)
+                        || currency.getCode().equals(CoinCode.REAL_BRL))
                     continue;
 
-
-                Currency currency = new Currency();
-                currency.setCode(code.getCode());
-                Ticker mbc = mercadoBitcoinService.getPrice24hr(currency);
-                Ticker bin = binanceService.getPrice24hr(currency);
-                Ticker zb = zbService.getPrice24hr(currency);
-                Ticker okex = okexService.getPrice24hr(currency);
-                tickers.add(mbc);
-                tickers.add(bin);
-                tickers.add(zb);
-                tickers.add(okex);
+                if(exchangeCodes.contains(ExchangeCode.MBTC)){
+                    addTicker(mercadoBitcoinService,tickers,currency);
+                }
+                if(exchangeCodes.contains(ExchangeCode.BINC)){
+                    addTicker(binanceService,tickers,currency);
+                }
+                if(exchangeCodes.contains(ExchangeCode.ZB)){
+                    addTicker(zbService,tickers,currency);
+                }
+                if(exchangeCodes.contains(ExchangeCode.OKEX)){
+                    addTicker(okexService,tickers,currency);
+                }
 
                 List<Ticker> tempTicker = tickers.stream()
                         .filter(c -> c.getCurrency().equals(currency))
@@ -156,5 +171,15 @@ public class CurrencyController {
             e.printStackTrace();
         }
         return "currencylist";
+    }
+
+    private void addTicker(ExchangeService service, List<Ticker> tickers, Currency currency){
+        try {
+            Ticker zb = service.getPrice24hr(currency);
+            tickers.add(zb);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
     }
 }
