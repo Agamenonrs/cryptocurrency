@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +44,14 @@ public class CoinController {
 	private List<Ticker> tickers;
 	
 	@RequestMapping("/")
-	public String index(){
+	public String index(HttpSession session){
+		UserConfiguration userConfiguration = (UserConfiguration) session.getAttribute("userConfiguration");
+		if(userConfiguration != null){
+			System.out.println("INDEX USERCONFIGURATION " + userConfiguration.getValue());
+		}else{
+			System.out.println("USER CONFIGURATION NULL");
+		}
+
 		return "index";
 	}
 
@@ -91,10 +98,16 @@ public class CoinController {
 	}
 
 	@RequestMapping(value="/currencyprices", method= RequestMethod.GET)
-	public String listaCurrencyPrices(Model model) {
+	public String listaCurrencyPrices(Model model,HttpSession session) {
 		List<Ticker> tickers = new ArrayList<>();
 		List<Opportunity> opportunities = new ArrayList<>();
 		System.out.println("========== loading page ============");
+		UserConfiguration userConfiguration = (UserConfiguration) session.getAttribute("userConfiguration");
+		if(userConfiguration != null){
+			System.out.println("CURRENCY PRICES USERCONFIGURATION " + userConfiguration.getValue());
+		}else{
+			System.out.println("USER CONFIGURATION NULL");
+		}
 		try {
 			for (CoinCode code : CoinCode.values()){
 				if(code.equals(CoinCode.DOLAR_USDT) || code.equals(CoinCode.REAL_BRL))

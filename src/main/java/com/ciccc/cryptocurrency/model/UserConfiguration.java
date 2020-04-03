@@ -8,13 +8,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
-public class UserConfiguration {
+public class UserConfiguration  implements Serializable {
+
 
     BigDecimal value = BigDecimal.ZERO;
     BigDecimal spreadMin;
