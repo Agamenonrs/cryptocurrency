@@ -94,6 +94,7 @@ public class CurrencyController {
         System.out.println("========== loading page ============");
         UserConfiguration userConfiguration = (UserConfiguration) session.getAttribute("userConfiguration");
         if (userConfiguration != null) {
+            userConfiguration = new UserConfiguration();
             System.out.println("CURRENCY PRICES USERCONFIGURATION " + userConfiguration.getValue());
         } else {
             System.out.println("USER CONFIGURATION NULL");
@@ -101,7 +102,7 @@ public class CurrencyController {
         try {
             List<Currency> currencies = new ArrayList<>();
             List<ExchangeCode> exchangeCodes = null;
-            if (userConfiguration != null && userConfiguration.getCurrencies().size() > 0) {
+            if (userConfiguration.getCurrencies().size() > 0) {
                 currencies = userConfiguration.getCurrencies();
                 if(userConfiguration.getExchanges() != null &&
                         userConfiguration.getExchanges().size() > 0)
@@ -115,9 +116,9 @@ public class CurrencyController {
                 exchangeCodes = Arrays.asList(ExchangeCode.values()) ;
 
             }
-            /*for (Currency currency : currencies) {
-                if (currency.getCode().equals(CoinCode.DOLAR_USDT)
-                        || currency.getCode().equals(CoinCode.REAL_BRL))
+            for (Currency currency : currencies) {
+                if (currency.getCode().equals(CoinCode.DOLAR_USDT.getCode())
+                        || currency.getCode().equals(CoinCode.REAL_BRL.getCode()))
                     continue;
 
                 if(exchangeCodes.contains(ExchangeCode.MBTC)){
@@ -138,32 +139,37 @@ public class CurrencyController {
                         .collect(Collectors.toList());
 
 
-                Ticker minBuy = tempTicker.get(0);
-                Ticker maxSell = tempTicker.get(0);
-                for (int i = 1; i < tempTicker.size(); i++) {
-                    Ticker tickerAux = tempTicker.get(i);
-                    if (!tickerAux.getExchange().equals(minBuy.getExchange())) {
-                        if (minBuy.getBuy().compareTo(tickerAux.getBuy()) > 0) {
-                            minBuy = tickerAux;
-                        }
-                        if (maxSell.getSell().compareTo(tickerAux.getSell()) < 0) {
-                            maxSell = tickerAux;
-                        }
-                    }
-                }
-                Opportunity o = new Opportunity(currency, minBuy, maxSell);
-                opportunities.add(o);
-            }*/
+                addOportunities(userConfiguration,opportunities, currency, tempTicker);
+            }
 
 
             model.addAttribute("tickers", tickers);
             model.addAttribute("opportunities", opportunities);
+            model.addAttribute("userConfiguration", userConfiguration);
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return "currencylist";
+    }
+
+    public void addOportunities(UserConfiguration userConfiguration, List<Opportunity> opportunities, Currency currency, List<Ticker> tempTicker) {
+        Ticker minBuy = tempTicker.get(0);
+        Ticker maxSell = tempTicker.get(0);
+        for (int i = 1; i < tempTicker.size(); i++) {
+            Ticker tickerAux = tempTicker.get(i);
+            if (!tickerAux.getExchange().equals(minBuy.getExchange())) {
+                if (minBuy.getBuy().compareTo(tickerAux.getBuy()) > 0) {
+                    minBuy = tickerAux;
+                }
+                if (maxSell.getSell().compareTo(tickerAux.getSell()) < 0) {
+                    maxSell = tickerAux;
+                }
+            }
+        }
+        Opportunity o = new Opportunity(userConfiguration, currency, minBuy, maxSell);
+        opportunities.add(o);
     }
 
     private void addTicker(ExchangeService service, List<Ticker> tickers, Currency currency){

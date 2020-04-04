@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Currency Price</title>
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+<head th:replace="head::head">
 </head>
+<div th:insert="navbar::fragment-navbar"/>
 <body>
 
 <div class="container">
@@ -13,9 +11,18 @@
 
         <!--<button data-toggle="collapse" class="btn btn-info" data-target="#tickerlist">Collapsible</button>-->
         <!--<button class="btn btn-default" onclick="reload()" >Reload</button>-->
-        <div class="panel-heading">User Preferences</div>
-        <div class="panel-body">
-            <label th:text="${userConfiguration != null ? userConfiguration : '' }"></label>
+        <div class="panel panel-default">
+            <div class="panel-heading">User Preferences</div>
+            <div class="panel-body">
+                <div>
+                    <label>Investiment: </label>
+                    <label th:text=" ${userConfiguration.value}" />
+                </div>
+                <div>
+                    <label>Spread %:</label>
+                    <label th:text=" ${userConfiguration.spreadMin}" />
+                </div>
+            </div>
         </div>
         <div class="panel panel-default" id="tickerlist">
             <div class="panel-heading">Currency Price List</div>
@@ -57,6 +64,7 @@
                     <th>Sell Price</th>
                     <th>Spread</th>
                     <th>%</th>
+                    <th>Value</th>
                 </tr>
                 </thead>
                 <tr th:each="opportunity : ${opportunities}">
@@ -67,6 +75,7 @@
                     <td><span th:text="${opportunity.sell.sell}"></span></td>
                     <td><span th:text="${opportunity.spread}"></span></td>
                     <td><span th:text="${opportunity.spreadPercentage}"></span></td>
+                    <td><span th:text="${opportunity.spreadValue}"></span></td>
                 </tr>
 
             </table>

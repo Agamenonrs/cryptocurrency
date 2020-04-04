@@ -10,6 +10,11 @@ import java.math.BigDecimal;
 
 public class ZBTicker extends Ticker {
 
+    public ZBTicker(BigDecimal high, BigDecimal low, BigDecimal vol, BigDecimal last, BigDecimal buy,
+                    BigDecimal sell, Long date, Currency currency) {
+        super(high, low, vol, last, buy, sell, date, currency, ExchangeCode.ZB);
+    }
+
     public ZBTicker(JsonObjectIntegration jsonObject, Currency currency) {
         super.currency = currency;
         exchange = ExchangeCode.ZB;

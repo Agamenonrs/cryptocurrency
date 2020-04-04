@@ -19,6 +19,23 @@ public abstract class Ticker {
     protected Currency currency;
     protected ExchangeCode exchange;
 
+    public Ticker() {
+    }
+
+    public Ticker(BigDecimal high, BigDecimal low, BigDecimal vol,
+                  BigDecimal last, BigDecimal buy, BigDecimal sell,
+                  Long date, Currency currency,
+                  ExchangeCode exchange) {
+        this.high = high;
+        this.low = low;
+        this.vol = vol;
+        this.last = last;
+        this.buy = buy;
+        this.sell = sell;
+        this.date = date;
+        this.currency = currency;
+        this.exchange = exchange;
+    }
 
     public abstract void setTicker(JsonObjectIntegration jsonObject);
 

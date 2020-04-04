@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="spread">Min Spread:</label>
+            <label class="control-label col-sm-2" for="spread">Min. Spread:</label>
             <div class="col-sm-10">
                 <input th:field="*{spreadMin}" type="number" data-decimals="2" min="0,1" max="10"
                        class="form-control" id="spread" placeholder="Ex. 1,2">
@@ -22,14 +22,14 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <ul style="display: inline-flex;">
+                <ul>
                     <li th:each="currency : ${coins}"
                         th:object="${currency}"
                         th:if="${currency.crypto} == true">
                         <div class="checkbox">
-                            <input type="checkbox" th:field="${userConfiguration.currencies}"
+                            <input type="checkbox" style="position: inherit;" th:field="${userConfiguration.currencies}"
                                    th:value="${currency.code}">
-                            <label style="margin-right: 3em;" class="form-check-label"
+                            <label class="form-check-label"
                                    th:text="${currency.code}"></label>
                         </div>
                     </li>
@@ -39,10 +39,10 @@
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <ul class="menu">
+                <ul>
                     <li th:each="exchange : ${exchanges}">
                         <div class="checkbox">
-                            <input type="checkbox" th:field="${userConfiguration.exchanges}"
+                            <input type="checkbox" style="position: inherit;" th:field="${userConfiguration.exchanges}"
                                    th:value="${exchange.name()}">
                             <label th:text="${exchange.exchangeName}"></label>
                         </div>

@@ -14,6 +14,14 @@ public class MercadoBitcoinTicker extends Ticker {
 
     BigDecimal dollarPrice = BigDecimal.ZERO;
 
+    public MercadoBitcoinTicker(BigDecimal high, BigDecimal low, BigDecimal vol,
+                                BigDecimal last, BigDecimal buy, BigDecimal sell,
+                                Long date, Currency currency,
+                                BigDecimal dollarPrice) {
+        super(high, low, vol, last, buy, sell, date, currency, ExchangeCode.MBTC);
+        this.dollarPrice = dollarPrice;
+    }
+
     /**
      * Constructor based on JSON response.
      *

@@ -9,7 +9,12 @@ import java.math.BigDecimal;
 
 public class OkexTicker extends Ticker {
 
-    public OkexTicker(JsonObjectIntegration jsonObject,Currency currency){
+    public OkexTicker(BigDecimal high, BigDecimal low, BigDecimal vol, BigDecimal last,
+                      BigDecimal buy, BigDecimal sell, Long date, Currency currency) {
+        super(high, low, vol, last, buy, sell, date, currency, ExchangeCode.OKEX);
+    }
+
+    public OkexTicker(JsonObjectIntegration jsonObject, Currency currency){
         super.currency = currency;
         exchange = ExchangeCode.OKEX;
         setTicker(jsonObject);

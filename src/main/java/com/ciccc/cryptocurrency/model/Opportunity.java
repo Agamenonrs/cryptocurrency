@@ -14,11 +14,16 @@ public class Opportunity {
     private Ticker sell;
     private BigDecimal spread;
     private BigDecimal spreadPercentage;
+    private BigDecimal spreadValue;
 
-    public Opportunity(Currency currency, Ticker buy, Ticker sell) {
+    public Opportunity(UserConfiguration userConfiguration,Currency currency, Ticker buy, Ticker sell) {
         this.currency = currency;
         this.buy = buy;
         this.sell = sell;
+        if(userConfiguration != null){
+            setSpreadValue(userConfiguration.getValue());
+        }
+
     }
 
     public Currency getCurrency() {
@@ -49,5 +54,17 @@ public class Opportunity {
                             .multiply(new BigDecimal("100")).setScale(2, RoundingMode.HALF_EVEN);
         }
         return spreadPercentage;
+    }
+
+    public void setSpreadValue(BigDecimal investiment) {
+        spreadValue = BigDecimal.ZERO;
+        if (investiment !=null) {
+                   spreadValue = getSpreadPercentage().divide(new BigDecimal("100"), MathContext.DECIMAL128)
+                            .multiply(investiment).setScale(2, RoundingMode.HALF_EVEN);
+        }
+    }
+
+    public BigDecimal getSpreadValue() {
+        return spreadValue;
     }
 }

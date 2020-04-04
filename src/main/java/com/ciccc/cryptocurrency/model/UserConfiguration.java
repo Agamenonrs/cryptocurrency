@@ -19,7 +19,7 @@ public class UserConfiguration  implements Serializable {
 
 
     BigDecimal value = BigDecimal.ZERO;
-    BigDecimal spreadMin;
+    BigDecimal spreadMin = BigDecimal.ZERO;
     List<Currency> currencies;
     List<ExchangeCode> exchanges;
 
