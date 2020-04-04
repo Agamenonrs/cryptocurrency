@@ -115,7 +115,7 @@ public class CurrencyController {
                 exchangeCodes = Arrays.asList(ExchangeCode.values()) ;
 
             }
-            for (Currency currency : currencies) {
+            /*for (Currency currency : currencies) {
                 if (currency.getCode().equals(CoinCode.DOLAR_USDT)
                         || currency.getCode().equals(CoinCode.REAL_BRL))
                     continue;
@@ -153,7 +153,7 @@ public class CurrencyController {
                 }
                 Opportunity o = new Opportunity(currency, minBuy, maxSell);
                 opportunities.add(o);
-            }
+            }*/
 
 
             model.addAttribute("tickers", tickers);
