@@ -94,9 +94,9 @@ public class CurrencyController {
         System.out.println("========== loading page ============");
         UserConfiguration userConfiguration = (UserConfiguration) session.getAttribute("userConfiguration");
         if (userConfiguration != null) {
-            userConfiguration = new UserConfiguration();
             System.out.println("CURRENCY PRICES USERCONFIGURATION " + userConfiguration.getValue());
         } else {
+            userConfiguration = new UserConfiguration();
             System.out.println("USER CONFIGURATION NULL");
         }
         try {
