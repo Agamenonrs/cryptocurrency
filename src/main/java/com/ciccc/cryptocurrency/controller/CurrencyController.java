@@ -110,6 +110,7 @@ public class CurrencyController {
                 for (CoinCode code : CoinCode.values()) {
                     Currency c = new Currency();
                     c.setCode(code.getCode());
+                    currencies.add(c);
                 }
                 exchangeCodes = Arrays.asList(ExchangeCode.values()) ;
 
