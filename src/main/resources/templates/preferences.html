@@ -6,56 +6,60 @@
 <body>
 <div class="container">
     <form class="form-horizontal" action="#" th:action="@{/config}" th:object="${userConfiguration}" method="post">
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="value">Investiment:</label>
-            <div class="col-sm-2">
-                <input th:field="*{value}" type="number" min="10" class="form-control"
-                       id="value" placeholder="Ex 3000">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="spread">Spread:</label>
-            <div class="col-sm-2">
-                <input th:field="*{spreadMin}" type="number" data-decimals="2" min="0,1" max="10"
-                       class="form-control" id="spread" placeholder="Ex. 1,2">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2">Currencies</label>
-            <div class="col-sm-4" style="margin-left: -20px;">
+        <div class="row">
+            <div class="col-sm-3">
+                    <label for="value">Investiment</label>
+                    <div>
+                        <input th:field="*{value}" type="number" min="10" class="form-control"
+                               id="value" placeholder="Ex 3000">
+                    </div>
 
-                <ul>
-                    <li th:each="currency : ${coins}"
-                        th:object="${currency}"
-                        th:if="${currency.crypto} == true">
-                        <div class="checkbox">
-                            <input type="checkbox" style="position: inherit;" th:field="${userConfiguration.currencies}"
-                                   th:value="${currency.code}">
-                            <label class="form-check-label"
-                                   th:text="${currency.code}"></label>
-                        </div>
-                    </li>
-                </ul>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2">Exchanges</label>
-            <div class="col-sm-4" style="margin-left: -20px;">
-                <ul>
-                    <li th:each="exchange : ${exchanges}">
-                        <div class="checkbox">
-                            <input type="checkbox" style="position: inherit;" th:field="${userConfiguration.exchanges}"
-                                   th:value="${exchange.name()}">
-                            <label th:text="${exchange.exchangeName}"></label>
-                        </div>
-                    </li>
-                </ul>
+            <div class="col-sm-3">
+                    <label for="spread">Spread</label>
+                    <div>
+                        <input th:field="*{spreadMin}" type="number" data-decimals="2" min="0,1" max="10"
+                               class="form-control" id="spread" placeholder="Ex. 1,2">
+                    </div>
             </div>
+            <div class="col-sm-3">
+                    <label>Currencies</label>
+                    <div style="margin-left: -20px;">
+
+                        <ul>
+                            <li th:each="currency : ${coins}"
+                                th:object="${currency}"
+                                th:if="${currency.crypto} == true">
+                                <div class="checkbox">
+                                    <input type="checkbox" style="position: inherit;" th:field="${userConfiguration.currencies}"
+                                           th:value="${currency.code}">
+                                    <label class="form-check-label"
+                                           th:text="${currency.code}"></label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+            </div>
+            <div class="col-sm-3">
+                    <label>Exchanges</label>
+                    <div style="margin-left: -20px;">
+                        <ul>
+                            <li th:each="exchange : ${exchanges}">
+                                <div class="checkbox">
+                                    <input type="checkbox" style="position: inherit;" th:field="${userConfiguration.exchanges}"
+                                           th:value="${exchange.name()}">
+                                    <label th:text="${exchange.exchangeName}"></label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary">Submit</button>
+        <div>
+            <div>
+                <button type="submit" class="btn btn-lg btn-primary">Submit</button>
             </div>
         </div>
     </form>
