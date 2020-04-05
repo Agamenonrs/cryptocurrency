@@ -7,22 +7,23 @@
 <div class="container">
     <form class="form-horizontal" action="#" th:action="@{/config}" th:object="${userConfiguration}" method="post">
         <div class="form-group">
-            <label class="control-label col-sm-2" for="value">Value:</label>
+            <label class="control-label col-sm-2" for="value">Investiment:</label>
             <div class="col-sm-2">
                 <input th:field="*{value}" type="number" min="10" class="form-control"
                        id="value" placeholder="Ex 3000">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="spread">Min. Spread:</label>
+            <label class="control-label col-sm-2" for="spread">Spread:</label>
             <div class="col-sm-2">
                 <input th:field="*{spreadMin}" type="number" data-decimals="2" min="0,1" max="10"
                        class="form-control" id="spread" placeholder="Ex. 1,2">
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-2">
-                <label>Currencies</label>
+            <label class="control-label col-sm-2">Currencies</label>
+            <div class="col-sm-4" style="margin-left: -20px;">
+
                 <ul>
                     <li th:each="currency : ${coins}"
                         th:object="${currency}"
@@ -36,8 +37,10 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-sm-offset-1 col-sm-4">
-                <label>Exchange</label>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Exchange</label>
+            <div class="col-sm-4" style="margin-left: -20px;">
                 <ul>
                     <li th:each="exchange : ${exchanges}">
                         <div class="checkbox">

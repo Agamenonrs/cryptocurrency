@@ -39,7 +39,7 @@ public class CurrencyController {
     @Autowired
     private DollarQuotationService dollarQuotationService;
 
-    private List<Ticker> tickers;
+    private List<Ticker> tickerList;
 
     @RequestMapping("/")
     public String index(HttpSession session) {
@@ -55,7 +55,7 @@ public class CurrencyController {
 
     @RequestMapping(value = "/ticker24h", method = RequestMethod.GET)
     public ResponseEntity<List<Ticker>> find() {
-        tickers = new ArrayList<>();
+        tickerList = new ArrayList<>();
         try {
             Currency currency = new Currency();
             currency.setCode("XRP");
@@ -63,16 +63,16 @@ public class CurrencyController {
             Ticker bin = binanceService.getPrice24hr(currency);
             Ticker zb = zbService.getPrice24hr(currency);
             Ticker okex = okexService.getPrice24hr(currency);
-            tickers.add(mbc);
-            tickers.add(bin);
-            tickers.add(zb);
-            tickers.add(okex);
+            tickerList.add(mbc);
+            tickerList.add(bin);
+            tickerList.add(zb);
+            tickerList.add(okex);
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return ResponseEntity.ok().body(tickers);
+        return ResponseEntity.ok().body(tickerList);
     }
 
     @RequestMapping(value = "/dollarQuotation", method = RequestMethod.GET)
@@ -121,7 +121,7 @@ public class CurrencyController {
                         || currency.getCode().equals(CoinCode.REAL_BRL.getCode()))
                     continue;
 
-                if(exchangeCodes.contains(ExchangeCode.MBTC)){
+                /*if(exchangeCodes.contains(ExchangeCode.MBTC)){
                     addTicker(mercadoBitcoinService,tickers,currency);
                 }
                 if(exchangeCodes.contains(ExchangeCode.BINC)){
@@ -132,7 +132,10 @@ public class CurrencyController {
                 }
                 if(exchangeCodes.contains(ExchangeCode.OKEX)){
                     addTicker(okexService,tickers,currency);
-                }
+                }*/
+
+                //Just for test
+                loadTickerTest(tickers);
 
                 List<Ticker> tempTicker = tickers.stream()
                         .filter(c -> c.getCurrency().equals(currency))
@@ -155,6 +158,9 @@ public class CurrencyController {
     }
 
     public void addOportunities(UserConfiguration userConfiguration, List<Opportunity> opportunities, Currency currency, List<Ticker> tempTicker) {
+        if(tempTicker == null || tempTicker.isEmpty())
+            return;
+
         Ticker minBuy = tempTicker.get(0);
         Ticker maxSell = tempTicker.get(0);
         for (int i = 1; i < tempTicker.size(); i++) {
@@ -180,5 +186,31 @@ public class CurrencyController {
             ex.printStackTrace();
         }
 
+    }
+
+    private void  loadTickerTest(List<Ticker> tickers){
+        Currency currency = new Currency();
+        currency.setCode("XRP");
+        Long dateTime = 1586012550L;
+        List<BigDecimal[]> prices = Arrays.asList(new BigDecimal[][] {
+                {BigDecimal.ZERO,new BigDecimal("1.0"),new BigDecimal("1.1")},
+                {BigDecimal.ZERO,new BigDecimal("1.1"),new BigDecimal("1.2")},
+                {BigDecimal.ZERO,new BigDecimal("1.0"),new BigDecimal("1.4")},
+                {BigDecimal.ZERO,new BigDecimal("1.2"),new BigDecimal("1.3")},
+
+        });
+        BigDecimal[] mbcValues = (BigDecimal[]) prices.get(0);
+        BigDecimal[] binValues = (BigDecimal[]) prices.get(1);
+        BigDecimal[] zbValues = (BigDecimal[]) prices.get(2);
+        BigDecimal[] okexValues = (BigDecimal[]) prices.get(3);
+        Ticker mbtcTicker = new MercadoBitcoinTicker(mbcValues[0],mbcValues[0],mbcValues[0],mbcValues[0],mbcValues[1],mbcValues[2],dateTime,currency,mbcValues[0]);
+        Ticker binTicker = new BinanceTicker(binValues[0],binValues[0],binValues[0],binValues[0],binValues[1],binValues[2],dateTime,currency);
+        Ticker zbTicker = new ZBTicker(zbValues[0],zbValues[0],zbValues[0],zbValues[0],zbValues[1],zbValues[2],dateTime,currency);
+        Ticker okexTicker = new OkexTicker(okexValues[0],okexValues[0],okexValues[0],okexValues[0],okexValues[1],okexValues[2],dateTime,currency);
+
+        tickers.add(mbtcTicker);
+        tickers.add(binTicker);
+        tickers.add(zbTicker);
+        tickers.add(okexTicker);
     }
 }
