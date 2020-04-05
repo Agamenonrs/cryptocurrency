@@ -14,13 +14,14 @@
         <div class="panel panel-success">
             <div class="panel-heading">User Preferences</div>
             <div class="panel-body">
-                <div>
-                    <label>Investiment: </label>
-                    <label th:text=" ${userConfiguration.value}" />
-                </div>
-                <div>
-                    <label>Spread %:</label>
-                    <label th:text=" ${userConfiguration.spreadMin}" />
+                <div class="row">
+                    <div class="col-sm-3"><label>Investiment: </label>
+                        <label th:text=" ${userConfiguration.value}" /></div>
+                    <div class="col-sm-2"><label>Spread %:</label>
+                        <label th:text=" ${userConfiguration.spreadMin}" /></div>
+                    <div class="col-sm-7"><form style="float: right;" action="#" th:action="@{/clearPreferences}" method="get">
+                                <button type="submit" class="btn btn-primary">Clear Preferences</button>
+                    </form></div>
                 </div>
             </div>
         </div>

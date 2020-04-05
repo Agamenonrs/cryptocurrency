@@ -40,4 +40,10 @@ public class PreferenceController {
         session.setAttribute("userConfiguration", preferences);
         return "redirect:/";
     }
+
+    @RequestMapping(value="/clearPreferences", method= RequestMethod.GET)
+    public String config(HttpSession session){
+        session.setAttribute("userConfiguration", new UserConfiguration());
+        return "redirect:currencyprices";
+    }
 }

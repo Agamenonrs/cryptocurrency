@@ -151,8 +151,10 @@ public class CurrencyController {
             model.addAttribute("userConfiguration", userConfiguration);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            model.addAttribute("tickers", tickers);
+            model.addAttribute("opportunities", opportunities);
+            model.addAttribute("userConfiguration", userConfiguration);
         }
         return "currencylist";
     }
