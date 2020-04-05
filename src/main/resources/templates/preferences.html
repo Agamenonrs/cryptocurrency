@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
+            <div class="col-sm-offset-2 col-sm-2">
                 <label>Currencies</label>
                 <ul>
                     <li th:each="currency : ${coins}"
@@ -36,11 +36,8 @@
                     </li>
                 </ul>
             </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <label>Exchanges</label>
+            <div class="col-sm-offset-1 col-sm-4">
+                <label>Exchange</label>
                 <ul>
                     <li th:each="exchange : ${exchanges}">
                         <div class="checkbox">
@@ -52,6 +49,7 @@
                 </ul>
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-primary">Submit</button>
