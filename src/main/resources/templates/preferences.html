@@ -24,16 +24,18 @@
             </div>
             <div class="col-sm-3">
                     <label>Currencies</label>
-                    <div style="margin-left: -20px;">
+                    <div style="margin-left: -20px;margin-top: -15px;">
 
                         <ul>
                             <li th:each="currency : ${coins}"
                                 th:object="${currency}"
                                 th:if="${currency.crypto} == true">
                                 <div class="checkbox">
+
                                     <input type="checkbox" style="position: inherit;" th:field="${userConfiguration.currencies}"
                                            th:value="${currency.code}">
-                                    <label class="form-check-label"
+                                    <img style="padding-left: 20px;" th:src="@{images/logos/coins/{image}.png(image=${currency.code})}" />
+                                    <label style="padding-left: 0;" class="form-check-label"
                                            th:text="${currency.code}"></label>
                                 </div>
                             </li>
@@ -43,13 +45,14 @@
             </div>
             <div class="col-sm-3">
                     <label>Exchanges</label>
-                    <div style="margin-left: -20px;">
+                    <div style="margin-left: -20px;margin-top: -15px;">
                         <ul>
                             <li th:each="exchange : ${exchanges}">
                                 <div class="checkbox">
                                     <input type="checkbox" style="position: inherit;" th:field="${userConfiguration.exchanges}"
                                            th:value="${exchange.name()}">
-                                    <label th:text="${exchange.exchangeName}"></label>
+                                    <img   style="padding-left: 20px;" th:src="@{images/logos/singlebrand/{image}.png(image=${exchange})}" />
+                                    <label style="padding-left: 0;" th:text="${exchange.exchangeName}"></label>
                                 </div>
                             </li>
                         </ul>

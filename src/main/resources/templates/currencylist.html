@@ -31,16 +31,16 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-						<th>Logo</th>
-                        <th>Exchange</th>
+						<th>Exchange</th>
+                        <!--<th>Exchange</th>-->
                         <th>Currency</th>
                         <th>Buy</th>
                         <th>Sell</th>
                     </tr>
                     </thead>
                     <tr th:each="ticker : ${tickers}">
-						<td><img src="/images/logos/zb.png"></td>
-                        <td><span th:text="${ticker.exchange.exchangeName}"></span></td>
+						<td><img th:src="@{images/logos/{image}.png(image=${ticker.exchange})}" /></td>
+                       <!-- <td><span th:text="${ticker.exchange.exchangeName}"></span></td>-->
                         <td><span th:text="${ticker.currency.code}"></span></td>
                         <td><span th:text="${ticker.buy}"></span></td>
                         <td><span th:text="${ticker.sell}"></span></td>
