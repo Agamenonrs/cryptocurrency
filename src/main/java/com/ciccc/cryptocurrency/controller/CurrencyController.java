@@ -121,7 +121,7 @@ public class CurrencyController {
                         || currency.getCode().equals(CoinCode.REAL_BRL.getCode()))
                     continue;
 
-                /*if(exchangeCodes.contains(ExchangeCode.MBTC)){
+                if(exchangeCodes.contains(ExchangeCode.MBTC)){
                     addTicker(mercadoBitcoinService,tickers,currency);
                 }
                 if(exchangeCodes.contains(ExchangeCode.BINC)){
@@ -132,10 +132,10 @@ public class CurrencyController {
                 }
                 if(exchangeCodes.contains(ExchangeCode.OKEX)){
                     addTicker(okexService,tickers,currency);
-                }*/
+                }
 
                 //Just for test
-                loadTickerTest(tickers);
+                //loadTickerTest(tickers);
 
                 List<Ticker> tempTicker = tickers.stream()
                         .filter(c -> c.getCurrency().equals(currency))
@@ -177,7 +177,15 @@ public class CurrencyController {
             }
         }
         Opportunity o = new Opportunity(userConfiguration, currency, minBuy, maxSell);
-        opportunities.add(o);
+        if(userConfiguration.getSpreadMin() != null
+                && userConfiguration.getSpreadMin().doubleValue() > 0 ){
+            if(o.getSpreadPercentage().compareTo(userConfiguration.getSpreadMin()) >=0){
+                opportunities.add(o);
+            }
+        }else{
+            opportunities.add(o);
+        }
+
     }
 
     private void addTicker(ExchangeService service, List<Ticker> tickers, Currency currency){

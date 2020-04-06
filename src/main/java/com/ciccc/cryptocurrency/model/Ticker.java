@@ -75,7 +75,4 @@ public abstract class Ticker {
         return date;
     }
 
-    //public EnumExchange getExchange();
-
-
 }
