@@ -59,4 +59,11 @@ public class UserConfiguration  implements Serializable {
     public void setExchanges(List<ExchangeCode> exchanges) {
         this.exchanges = exchanges;
     }
+
+    public void clear(){
+        setValue(BigDecimal.ZERO);
+        setSpreadMin(BigDecimal.ZERO);
+        getExchanges().clear();
+        getCurrencies().clear();
+    }
 }

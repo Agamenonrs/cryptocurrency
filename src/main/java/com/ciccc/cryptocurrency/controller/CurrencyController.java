@@ -41,11 +41,15 @@ public class CurrencyController {
 
     private List<Ticker> tickerList;
 
+    @Autowired
+    UserConfiguration UCSession;
+
     @RequestMapping("/")
-    public String index(HttpSession session) {
-        UserConfiguration userConfiguration = (UserConfiguration) session.getAttribute("userConfiguration");
-        if (userConfiguration != null) {
-            System.out.println("INDEX USERCONFIGURATION " + userConfiguration.getValue());
+    public String index() {
+        System.out.println("UCSession " + UCSession.getValue());
+        if (UCSession != null) {
+            System.out.println("INDEX USERCONFIGURATION " + UCSession.getValue());
+
         } else {
             System.out.println("USER CONFIGURATION NULL");
         }
@@ -88,25 +92,23 @@ public class CurrencyController {
     }
 
     @RequestMapping(value = "/currencyprices", method = RequestMethod.GET)
-    public String listaCurrencyPrices(Model model, HttpSession session) {
+    public String listaCurrencyPrices(Model model) {
         List<Ticker> tickers = new ArrayList<>();
         List<Opportunity> opportunities = new ArrayList<>();
         System.out.println("========== loading page ============");
-        UserConfiguration userConfiguration = (UserConfiguration) session.getAttribute("userConfiguration");
-        if (userConfiguration != null) {
-            System.out.println("CURRENCY PRICES USERCONFIGURATION " + userConfiguration.getValue());
+        if (UCSession != null) {
+            System.out.println("CURRENCY PRICES USERCONFIGURATION " + UCSession.getValue());
         } else {
-            userConfiguration = new UserConfiguration();
             System.out.println("USER CONFIGURATION NULL");
         }
         try {
             List<Currency> currencies = new ArrayList<>();
             List<ExchangeCode> exchangeCodes = null;
-            if (userConfiguration.getCurrencies().size() > 0) {
-                currencies = userConfiguration.getCurrencies();
-                if(userConfiguration.getExchanges() != null &&
-                        userConfiguration.getExchanges().size() > 0)
-                exchangeCodes = userConfiguration.getExchanges();
+            if (UCSession.getCurrencies().size() > 0) {
+                currencies = UCSession.getCurrencies();
+                if(UCSession.getExchanges() != null &&
+                        UCSession.getExchanges().size() > 0)
+                exchangeCodes = UCSession.getExchanges();
             } else {
                 for (CoinCode code : CoinCode.values()) {
                     Currency c = new Currency();
@@ -142,19 +144,19 @@ public class CurrencyController {
                         .collect(Collectors.toList());
 
 
-                addOportunities(userConfiguration,opportunities, currency, tempTicker);
+                addOportunities(UCSession,opportunities, currency, tempTicker);
             }
 
 
             model.addAttribute("tickers", tickers);
             model.addAttribute("opportunities", opportunities);
-            model.addAttribute("userConfiguration", userConfiguration);
+            model.addAttribute("userConfiguration", UCSession);
 
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("tickers", tickers);
             model.addAttribute("opportunities", opportunities);
-            model.addAttribute("userConfiguration", userConfiguration);
+            model.addAttribute("userConfiguration", UCSession);
         }
         return "currencylist";
     }
